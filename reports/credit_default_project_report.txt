@@ -1,0 +1,215 @@
+
+CREDIT CARD DEFAULT RISK PREDICTION USING MACHINE LEARNING
+Industry Oriented Project Report
+Author: Dinesh S
+
+============================================================
+
+1. PROBLEM STATEMENT
+------------------------------------------------------------
+Financial institutions face significant losses due to customers defaulting on credit card payments. Traditional rule-based systems are often insufficient to accurately identify high-risk customers in advance.
+
+The objective of this project is to build a Machine Learning system that can predict whether a customer is likely to default on their next credit card payment using historical financial and behavioral data.
+
+This solution helps banks and financial organizations:
+- Reduce financial risk
+- Improve loan approval decisions
+- Optimize credit limit allocation
+- Strengthen risk management strategies
+
+
+============================================================
+
+2. DATASET DESCRIPTION
+------------------------------------------------------------
+Source: UCI Machine Learning Repository – Default of Credit Card Clients Dataset
+
+Dataset Size:
+- Records: 30,000 customers
+- Features: 23 input features + 1 target variable
+
+Target Variable:
+- default payment next month (renamed to target)
+    0 = No Default
+    1 = Default
+
+Feature Categories:
+- Demographic Information:
+    LIMIT_BAL, SEX, EDUCATION, MARRIAGE, AGE
+
+- Repayment History:
+    PAY_0, PAY_2, PAY_3, PAY_4, PAY_5, PAY_6
+
+- Billing Amounts:
+    BILL_AMT1 to BILL_AMT6
+
+- Payment Amounts:
+    PAY_AMT1 to PAY_AMT6
+
+
+============================================================
+
+3. METHODOLOGY
+------------------------------------------------------------
+
+Project Pipeline:
+
+Raw Dataset
+    ↓
+Data Cleaning (data_cleaning.py)
+    ↓
+Exploratory Data Analysis (eda.py)
+    ↓
+Feature Engineering & Scaling (train.py)
+    ↓
+Model Training & Evaluation
+    ↓
+Hyperparameter Tuning
+    ↓
+Model Deployment (Streamlit app.py)
+
+Key Processing Steps:
+- Removal of irrelevant ID column
+- Missing value treatment using median imputation
+- Feature scaling using StandardScaler
+- Stratified train-test split
+- Multi-model training and comparison
+- Model selection based on ROC-AUC and Recall
+
+
+============================================================
+
+4. EXPLORATORY DATA ANALYSIS (EDA) INSIGHTS
+------------------------------------------------------------
+
+1. Class Distribution:
+   - Dataset is imbalanced
+   - Majority customers are non-defaulters
+   - Business implication: Accuracy alone is misleading
+
+2. Credit Limit Distribution:
+   - Most customers fall into lower credit limit ranges
+   - Higher credit limits correlate with lower default risk
+
+3. Age vs Default:
+   - Default risk varies across age groups
+   - Younger and mid-age customers show moderate risk
+
+4. Payment Delay vs Default:
+   - Strong positive relationship between payment delay and default
+   - Repayment history is the strongest risk indicator
+
+5. Bill Amount vs Default:
+   - Defaulters tend to have higher outstanding bills
+   - High utilization combined with low payment increases risk
+
+6. Correlation Analysis:
+   - PAY_0 to PAY_6 features show strongest correlation with default
+   - Billing and payment behavior strongly influence risk outcome
+
+
+============================================================
+
+5. MODEL PERFORMANCE
+------------------------------------------------------------
+
+Five models were trained and evaluated:
+
+1. Logistic Regression
+2. Decision Tree
+3. Random Forest
+4. Support Vector Machine (SVM)
+5. XGBoost
+
+Evaluation Metrics Used:
+- Confusion Matrix
+- Accuracy
+- ROC-AUC Score
+- Recall (for default class)
+
+A confusion matrix was generated for the final tuned Random Forest model to analyze prediction errors in detail.
+
+Interpretation:
+
+- True Positives (TP): Customers correctly identified as defaulters.
+- True Negatives (TN): Customers correctly identified as non-defaulters.
+- False Positives (FP): Safe customers wrongly classified as risky.
+- False Negatives (FN): Defaulters wrongly classified as safe.
+
+Impact:
+
+False Negatives are the most critical error in credit risk systems because they represent customers who will default but were approved by the system, leading to direct financial loss.
+
+Therefore, the model selection prioritized Recall and ROC-AUC to minimize false negatives rather than relying only on accuracy.
+
+Conclusion:
+
+The confusion matrix confirms that the final model maintains a reasonable balance between detecting risky customers and avoiding unnecessary rejection of safe customers.
+
+Results Summary:
+
+Logistic Regression:
+    ROC-AUC ≈ 0.71
+    Recall ≈ 0.62
+
+Decision Tree:
+    ROC-AUC ≈ 0.61
+    Recall ≈ 0.38
+
+Random Forest:
+    ROC-AUC ≈ 0.75
+    Recall ≈ 0.34
+
+SVM:
+    ROC-AUC ≈ 0.75
+    Recall ≈ 0.56
+
+XGBoost:
+    ROC-AUC ≈ 0.75
+    Recall ≈ 0.57
+
+Tuned Random Forest (Final Model):
+    ROC-AUC ≈ 0.77
+    Recall ≈ 0.57
+
+Final Model Selected:
+    Tuned Random Forest Classifier
+
+
+============================================================
+
+6. FINAL INSIGHTS
+------------------------------------------------------------
+
+- Repayment history is the most important predictor of default.
+- Customers with frequent payment delays and high bill amounts are significantly riskier.
+- Class imbalance must be handled carefully in financial datasets.
+- Recall is more critical than accuracy for identifying risky customers.
+- Ensemble models outperform single models for complex financial behavior.
+
+
+============================================================
+
+7. BUSINESS RECOMMENDATIONS
+------------------------------------------------------------
+
+1. Use ML-based risk scoring before approving credit limits.
+2. Reduce limits or increase monitoring for customers with repeated payment delays.
+3. Offer early intervention programs for medium-risk customers.
+4. Continuously retrain model using new transaction data.
+
+
+============================================================
+
+8. CONCLUSION
+------------------------------------------------------------
+
+This project demonstrates how Machine Learning can be applied to solve real-world credit risk problems in the finance sector.
+
+By integrating data preprocessing, exploratory analysis, multi-model evaluation, and web-based deployment, the system provides an end-to-end industry-ready solution.
+
+Future enhancements include model explainability, live data integration, and automated retraining pipelines.
+
+============================================================
+
+END OF REPORT
